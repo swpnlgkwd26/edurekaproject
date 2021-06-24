@@ -1,0 +1,51 @@
+﻿
+@model AccountEditModel
+    <div class="card card-outline-primary m-4 p-4">
+        <div class="bg-faded p-2">
+            <h3>Add Product</h3>
+            <hr />
+            <form asp-action="Create" asp-controller="Customer" asp-antiforgery="true">
+                <div class="form-group">
+                    <label asp-for="@Model.CustomerId">Customer ID</label>
+                    <input type="text" asp-for="@Model.CustomerId" class="form-control" placeholder="Customer ID">
+                    <span asp-validation-for="@Model.CustomerId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.AccountNumber">Account Number</label>
+                    <input type="text" asp-for="@Model.AccountNumber" class="form-control" placeholder="Account Number">
+                    <span asp-validation-for="@Model.AccountNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.AccountHolderName">Name</label>
+                    <input type="text" asp-for="@Model.AccountHolderName" class="form-control" placeholder="Name">
+                    <span asp-validation-for="@Model.AccountHolderName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Balance">Price</label>
+                    <input type="text" asp-for="@Model.Balance" class="form-control" placeholder="Balance">
+                    <span asp-validation-for="@Model.Balance" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Address">Address</label>
+                    <input type="text" asp-for="@Model.Address" class="form-control" placeholder="Address">
+                    <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.MobileNumber">Mobile Number</label>
+                    <input type="text" asp-for="@Model.MobileNumber" class="form-control" placeholder="Mobile Number">
+                    <span asp-validation-for="@Model.MobileNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.TypeOfAccount">Type Of Account</label>
+                    @*<input type="text" asp-for="@Model.TypeOfAccount" class="form-control" placeholder="Type Of Account">*@
+                    <select asp-for="@Model.TypeOfAccount">
+                        <option value="Saving"> Saving</option>
+                        <option value="Current"> Current</option>
+                    </select>
+                    <span asp-validation-for="@Model.TypeOfAccount" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,36 @@
+﻿@model AccountListViewModel
+@*@Html.ActionLink("Create","Create","Home", new class{)*@
+<a asp-action="Create" asp-controller="Customer">Add Account</a>
+@foreach (var p in Model.Accounts)
+{
+    <div class="card card-outline-primary m-1 p-1">
+        <div class="bg-faded p-1">
+            <h4>
+                <a asp-action="Details" asp-controller="Customer" asp-route-accountno="@p.AccountNumber">
+                    @p.AccountHolderName
+                </a>
+                <br />
+                <span class="badge badge-pill badge-primary" style="float:right">
+                    <small>@p.Balance.ToString("c")</small>
+                </span>
+            </h4>
+            <span>
+                <a asp-action="Delete" asp-route-accountno="@p.AccountNumber"
+                   asp-controller="Customer"> Delete</a>
+                &nbsp;&nbsp;&nbsp;
+                <a asp-action="Update" asp-controller="Customer"
+                   asp-route-accountno="@p.AccountNumber">
+                    Update
+                </a>
+                &nbsp;&nbsp;&nbsp;
+            </span>
+        </div>
+        <div class="card-text p-1"><span> Type Of Account : </span><small><b>@p.TypeOfAccount</b></small></div>
+    </div>
+}
+
+<div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>
+

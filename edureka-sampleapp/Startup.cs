@@ -1,3 +1,4 @@
+using edureka_sampleapp.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,7 @@ namespace edureka_sampleapp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IStoreRepository, AccountInMemoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,9 +46,19 @@ namespace edureka_sampleapp
 
             app.UseEndpoints(endpoints =>
             {
+               
+                endpoints.MapControllerRoute("catpage", "{category}/Page{accountpage:int:min(1)}",
+                new { Controller = "Customer", action = "Index" });
+
+                endpoints.MapControllerRoute("category", "{category}",
+                new { Controller = "Customer", action = "Index", accountpage = 1 });
+                endpoints.MapControllerRoute("pagination", "Accounts/Page{accountpage:int}",
+                 new { Controller = "Customer", action = "Index" });
+
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Customer}/{action=Index}");
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

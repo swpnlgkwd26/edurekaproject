@@ -1,0 +1,23 @@
+﻿@model IEnumerable<string>
+<a class="btn btn-block btn-outline-secondary" asp-action="Index"
+   asp-controller="Home" asp-route-category="">
+    Home
+</a>
+<a class="btn btn-block btn-outline-secondary" asp-action="CalculateLoanEmi"
+   asp-controller="Customer" asp-route-category="">
+    Calculate  EMI
+</a>
+<a class="btn btn-block btn-outline-secondary" asp-action="Index"
+   asp-controller="Customer" asp-route-category="">
+   All Accounts
+</a>
+ 
+@foreach (var category in Model)
+{
+    <a   class="btn btn-block btn-outline-secondary" 
+       asp-route-category="@category"
+       asp-route-accountPage="1"
+       asp-action="Index" asp-controller="Customer">
+        @category
+    </a>
+}

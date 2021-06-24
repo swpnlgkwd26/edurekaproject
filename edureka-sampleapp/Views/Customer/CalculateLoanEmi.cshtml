@@ -1,0 +1,32 @@
+﻿@model LoanViewModel
+
+<div class="card card-outline-primary m-4 p-4">
+    <div class="bg-faded p-2">
+        <h3>Calculate Emi For Home/Vehicle/Personal</h3>
+        <hr />
+        <form asp-action="CalculateLoanEmi" asp-controller="Customer" asp-antiforgery="true">
+            <div class="form-group">
+                <label asp-for="@Model.PrincipalAmount">Principal  Amount</label>
+                <input type="text" asp-for="@Model.PrincipalAmount" class="form-control" placeholder="Principal Amount">
+                <span asp-validation-for="@Model.PrincipalAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.RateOfInterest">RateOfInterest</label>
+                <input type="text" asp-for="@Model.RateOfInterest" class="form-control" placeholder="RateOfInterest">
+                <span asp-validation-for="@Model.RateOfInterest" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.TotalNoOfMonths">Name</label>
+                <input type="text" asp-for="@Model.TotalNoOfMonths" class="form-control" placeholder="TotalNoOfMonths">
+                <span asp-validation-for="@Model.TotalNoOfMonths" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <br />
+        @if (ViewBag.Emi != null)
+        {
+            <h3 class="alert-dark"> Your Emi : @ViewBag.Emi</h3>
+        }
+    </div>
+</div>
+
