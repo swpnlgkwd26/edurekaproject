@@ -1,4 +1,5 @@
-﻿using System;
+﻿using edureka_sampleapp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -85,6 +86,12 @@ namespace edureka_sampleapp.Models
             accounts.Remove(account);
             return true;
         }
+
+        public string FundTransfer(FundTransferViewModel fundTransfer)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Account> GetAccount(string accountType)
         {
             var accountsInfo = accounts

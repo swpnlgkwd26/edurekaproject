@@ -4,7 +4,7 @@
     <div class="bg-faded p-2">
         <h3>Update Account Information</h3>
         <hr />
-        <form asp-action="Create" asp-controller="Customer" asp-antiforgery="true">
+        <form asp-action="Update" asp-controller="Customer" asp-antiforgery="true">
             <div class="form-group">
                 <label asp-for="@Model.CustomerId">Customer ID</label>
                 <input type="text" asp-for="@Model.CustomerId" readonly="true" class="form-control" placeholder="Customer ID">

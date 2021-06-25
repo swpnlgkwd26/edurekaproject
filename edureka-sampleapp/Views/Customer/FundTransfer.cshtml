@@ -1,0 +1,28 @@
+﻿@model FundTransferViewModel
+
+<div class="card card-outline-primary m-4 p-4">
+    <div class="bg-faded p-2">
+        <h3>Fund Transfer</h3>
+        <hr />
+        <form asp-action="FundTransfer" asp-controller="Customer" asp-antiforgery="true">
+            <div class="form-group">
+                <label asp-for="@Model.FromAccount">From Account</label>
+                <input type="text" asp-for="@Model.FromAccount" class="form-control" placeholder="From Account">
+                <span asp-validation-for="@Model.FromAccount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ToAccount">To Account</label>
+                <input type="text" asp-for="@Model.ToAccount" class="form-control" placeholder="ToAccount">
+                <span asp-validation-for="@Model.ToAccount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Amount">Amount</label>
+                <input type="text" asp-for="@Model.Amount" class="form-control" placeholder="Amount">
+                <span asp-validation-for="@Model.Amount" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      
+    </div>
+</div>
+

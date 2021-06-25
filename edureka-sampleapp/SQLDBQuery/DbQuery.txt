@@ -1,0 +1,23 @@
+﻿
+-- Add this Database and Table in SQL Server
+ CREATE DATABASE edurekasampledb
+ Use edurekasampledb
+
+ CREATE TABLE Accounts
+ (
+  CustomerId int ,
+  AccountNumber int Primary Key,
+  AccountHolderName Varchar(200),
+  Address Varchar(300),
+  MobileNumber Varchar(20),
+  Balance float ,
+  TypeOfAccount Varchar(20)
+ )
+ Insert into Accounts Values(1,1000,'Sachin Tendulkar','Mumbai','9878787',100000,'Saving') 
+ Insert into Accounts Values(1,1001,'Sachin Tendulkar','Mumbai','9878787',100000,'Current') 
+ Insert into Accounts Values(2,1002,'Saurav Ganguly','Kolkata','9878787',200000,'Saving') 
+ Insert into Accounts Values(2,1003,'Saurav Ganguly','Kolkata','9878787',300000,'Current')
+ Insert into Accounts Values(3,1004,'Rahul Dravid','Banglore','9878787',200000,'Saving') 
+ Insert into Accounts Values(3,1005,'Rahul Dravid','Banglore','9878787',300000,'Current')
+
+ Select  * From Accounts

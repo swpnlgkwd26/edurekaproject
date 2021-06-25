@@ -1,4 +1,5 @@
-﻿using edureka_sampleapp.Models;
+﻿using AutoMapper;
+using edureka_sampleapp.Models;
 using edureka_sampleapp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,10 +12,12 @@ namespace edureka_sampleapp.Controllers
     public class CustomerController : Controller
     {
         private readonly IStoreRepository _repository;
+        private readonly IMapper _mapper;
         public int PageSize = 3;
-        public CustomerController(IStoreRepository repository)
+        public CustomerController(IStoreRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         public IActionResult Index(string category, int accountPage = 1)
         {
@@ -28,7 +31,7 @@ namespace edureka_sampleapp.Controllers
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = accountPage,
-                    ItemsPerPage = PageSize,                  
+                    ItemsPerPage = PageSize,
                     TotalItems = category == null ?
                         _repository.Accounts.Count() :
                         _repository.Accounts.Where(e =>
@@ -38,7 +41,6 @@ namespace edureka_sampleapp.Controllers
             };
             return View(accountListViewModel);
         }
-
         public IActionResult Create()
         {
             return View();
@@ -49,16 +51,7 @@ namespace edureka_sampleapp.Controllers
         {
             if (ModelState.IsValid)
             {
-                Account account = new Account
-                {
-                    AccountHolderName = accountEditModel.AccountHolderName,
-                    AccountNumber = accountEditModel.AccountNumber,
-                    Address = accountEditModel.Address,
-                    Balance = accountEditModel.Balance,
-                    CustomerId = accountEditModel.CustomerId,
-                    MobileNumber = accountEditModel.MobileNumber,
-                    TypeOfAccount = accountEditModel.TypeOfAccount
-                };
+                var account = _mapper.Map<Account>(accountEditModel);
                 _repository.AddAccount(account);
                 return RedirectToAction("Index", "Customer");
             }
@@ -74,16 +67,7 @@ namespace edureka_sampleapp.Controllers
         public IActionResult Update(int accountno)
         {
             var account = _repository.GetAccountByNumber(accountno);
-            AccountEditModel accountEditModel = new AccountEditModel
-            {
-                AccountHolderName = account.AccountHolderName,
-                AccountNumber = account.AccountNumber,
-                Address = account.Address,
-                Balance = account.Balance,
-                CustomerId = account.CustomerId,
-                MobileNumber = account.MobileNumber,
-                TypeOfAccount = account.TypeOfAccount
-            };
+            var accountEditModel = _mapper.Map<AccountEditModel>(account);
             return View(accountEditModel);
         }
 
@@ -92,37 +76,17 @@ namespace edureka_sampleapp.Controllers
         {
             if (ModelState.IsValid)
             {
-                Account account = new Account
-                {
-                    AccountHolderName = accountEditModel.AccountHolderName,
-                    AccountNumber = accountEditModel.AccountNumber,
-                    Address = accountEditModel.Address,
-                    Balance = accountEditModel.Balance,
-                    CustomerId = accountEditModel.CustomerId,
-                    MobileNumber = accountEditModel.MobileNumber,
-                    TypeOfAccount = accountEditModel.TypeOfAccount
-                };
+                var account = _mapper.Map<Account>(accountEditModel);
                 _repository.UpdateAccount(account);
                 return RedirectToAction("Index", "Customer");
-
             }
             return View();
-      
         }
 
         public IActionResult Details(int accountno)
         {
             var account = _repository.GetAccountByNumber(accountno);
-            AccountViewModel accountViewModel = new AccountViewModel
-            {
-                AccountHolderName = account.AccountHolderName,
-                AccountNumber = account.AccountNumber,
-                Address = account.Address,
-                Balance = account.Balance,
-                CustomerId = account.CustomerId,
-                MobileNumber = account.MobileNumber,
-                TypeOfAccount = account.TypeOfAccount
-            };
+            var accountViewModel = _mapper.Map<AccountViewModel>(account);             
             return View(accountViewModel);
         }
 
@@ -134,12 +98,29 @@ namespace edureka_sampleapp.Controllers
         [HttpPost]
         public IActionResult CalculateLoanEmi(LoanViewModel loanModel)
         {
-            double r =(double) loanModel.RateOfInterest / 100;
-            var subFormula = Math.Pow((1 + r),loanModel.TotalNoOfMonths);
+            double r = (double)loanModel.RateOfInterest / 100;
+            var subFormula = Math.Pow((1 + r), loanModel.TotalNoOfMonths);
             var numerator = loanModel.PrincipalAmount * r * subFormula;
             var denominator = subFormula - 1;
             double emi = numerator / denominator;
             ViewBag.Emi = emi.ToString("c");
+            return View();
+        }
+
+        public IActionResult FundTransfer()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult FundTransfer(FundTransferViewModel fundTransfer)
+        {
+            var message = _repository.FundTransfer(fundTransfer);
+            
+            return RedirectToAction("TransactionPage",new {Message = message });
+        }
+        public IActionResult TransactionPage(string message)
+        {
+            @ViewBag.Message = message;
             return View();
         }
 
